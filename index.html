@@ -62,6 +62,11 @@ html[lang="en"] .btn[data-en]{display:inline-flex}
 .foot{text-align:center;margin-top:28px;font-size:13px;color:var(--sub)}
 .foot a{color:var(--navy);font-weight:700;text-decoration:none;border-bottom:2px solid var(--yellow)}
 .foot p+p{margin-top:8px}
+.foot .sns-title{font-weight:700;color:var(--navy)}
+.foot .sns{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:10px 0 14px}
+.foot .sns a{border:1.5px solid var(--navy);border-bottom:1.5px solid var(--navy);border-radius:999px;padding:7px 14px;min-height:36px;display:inline-flex;align-items:center;font-size:13px}
+.foot .sns a:hover{background:var(--yellow)}
+.foot .sns a:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
 [data-en]{display:none}
 html[lang="en"] [data-ko]{display:none}
 html[lang="en"] [data-en]{display:revert}
@@ -163,7 +168,15 @@ html[lang="en"] [data-en]{display:revert}
   </main>
 
   <footer class="foot">
-    <p><span data-ko>만드는 과정은 유튜브에서</span><span data-en>Behind the build on YouTube</span> · <a href="https://www.youtube.com/@moomoo_lab_kr" data-app="youtube" rel="noopener">YouTube</a></p>
+    <p class="sns-title"><span data-ko>무무랩 SNS</span><span data-en>Follow moolab</span></p>
+    <nav class="sns" aria-label="SNS">
+      <a href="https://www.youtube.com/@moolab_studio" data-app="sns_youtube" rel="noopener">YouTube</a>
+      <a href="https://www.instagram.com/moolab_studio/" data-app="sns_instagram" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@moolab_studio" data-app="sns_tiktok" rel="noopener">TikTok</a>
+      <a href="https://www.threads.com/@moolab_studio" data-app="sns_threads" rel="noopener">Threads</a>
+      <a href="https://x.com/moolab_studio" data-app="sns_x" rel="noopener">X</a>
+      <a href="https://www.facebook.com/moolab.studio" data-app="sns_facebook" rel="noopener">Facebook</a>
+    </nav>
     <p>© 2026 moomoo lab</p>
   </footer>
 </div>
