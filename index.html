@@ -55,6 +55,11 @@ h2{font-size:13px;font-weight:700;color:var(--sub);letter-spacing:.06em;margin:4
 .btn.store:active{transform:translateY(1px)}
 .btn.store svg{width:16px;height:16px;fill:currentColor}
 .btn.web{background:transparent;color:var(--navy);border:2px solid var(--navy)}
+/* phone OS: that OS's store button becomes one big primary button, the other store shrinks to a small text link */
+html.os-ios .btn[data-store="ios"],html.os-android .btn[data-store="play"]{flex:1 1 100%;order:-1;min-height:52px;font-size:16px}
+html.os-ios .btn[data-store="ios"] svg,html.os-android .btn[data-store="play"] svg{width:18px;height:18px}
+html.os-ios .btn[data-store="play"],html.os-android .btn[data-store="ios"]{flex:0 0 auto;order:2;padding:0 6px;background:transparent;color:var(--sub);font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+html.os-ios .btn[data-store="play"] svg,html.os-android .btn[data-store="ios"] svg{width:12px;height:12px}
 html[lang="en"] .btn[data-en]{display:inline-flex}
 .btn.soon{background:transparent;color:var(--sub);border:1px dashed rgba(27,31,59,.25);cursor:default}
 .btn:focus-visible,.lang button:focus-visible,.foot a:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
@@ -206,6 +211,26 @@ html[lang="en"] [data-en]{display:revert}
   var qs = new URLSearchParams(location.search);
   var s = (qs.get("s") || "").toLowerCase();
   if (!SOURCES[s] && !NAME_RX.test(s)) s = "";
+  // bio links may use ?utm_source= instead of ?s= (e.g. IG KR bio: utm_source=ig_kr). Same rule as ?s=.
+  // <platform>[_<account lang>] -> platform code; the account language (kr/ko/en) goes into the campaign name.
+  var PLAT_ALIAS = {ig:"ig", instagram:"ig", yt:"yt", youtube:"yt", tt:"tt", tiktok:"tt", th:"th", threads:"th", x:"x", twitter:"x", tw:"x", fb:"fb", facebook:"fb"};
+  var ACCT_LANG = {kr:"ko", ko:"ko", en:"en", us:"en", gl:"en"};
+  var acctLang = "";
+  if (!s) {
+    var us = (qs.get("utm_source") || "").toLowerCase();
+    if (NAME_RX.test(us)) s = us;
+    else if (us) {
+      var parts = us.split(/[_\-.]/);
+      if (PLAT_ALIAS[parts[0]]) { s = PLAT_ALIAS[parts[0]]; acctLang = ACCT_LANG[parts[1] || ""] || ""; }
+    }
+  }
+
+  // phone OS -> one big store button for that OS (no auto redirect: this hub serves 4 apps)
+  var ua = navigator.userAgent || "";
+  var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  var isAndroid = !isIOS && /Android/i.test(ua);
+  if (isIOS) document.documentElement.classList.add("os-ios");
+  else if (isAndroid) document.documentElement.classList.add("os-android");
 
   // language: ?lang= > saved choice > browser language
   function setLang(l, save){
@@ -241,13 +266,13 @@ html[lang="en"] [data-en]{display:revert}
     } catch (e) {}
   }
   // store links: App Store ct/pt, Play referrer utm. The ?s= value is carried into the campaign name.
-  var PT = ""; // App Store Connect provider token (pt). Fill in once confirmed; empty = ct only.
+  var PT = "129006966"; // App Store Connect provider token (pt)
   var APP_CODE = {social_timer:"st", cheonwon_hanggi:"gj", shortssekki:"ss", floorwake:"fw"};
   function tag(a){
     try {
       var app = APP_CODE[(a.getAttribute("data-app") || "").replace(/_play$/, "")];
       if (!app) return;
-      var l = document.documentElement.lang === "en" ? "en" : "ko";
+      var l = acctLang || (document.documentElement.lang === "en" ? "en" : "ko");
       var name = NAME_RX.test(s) ? app + s.slice(2) : (SOURCES[s] ? app + "_bio_" + l + "_" + s : app + "_lab_" + l + "_web");
       var src = name.split("_").pop(), med = (src === "web") ? "web" : "social";
       var u = new URL(a.href);
