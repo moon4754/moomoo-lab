@@ -169,9 +169,6 @@ html[lang="en"] [data-en]{display:revert}
           <a class="btn web" href="https://pb.soloflux.net/floorwake/en/" data-en data-app="floorwake_web" rel="noopener">Website</a>
         </div>
       </li>
-    </ul>
-    <h2 style="margin-top:24px"><span data-ko>곧 나올 앱</span><span data-en>COMING SOON</span></h2>
-    <ul class="apps">
       <li class="card">
         <img class="icon" src="img/lt.png" width="64" height="64" alt="">
         <div>
@@ -179,7 +176,14 @@ html[lang="en"] [data-en]{display:revert}
           <p class="desc"><span data-ko>소중한 사람과 함께할 남은 시간. 오늘 걷고 채소를 먹은 만큼 늘어난 시간을 분 단위로. 완전 무료.</span><span data-en>The time left with the people you love, and the minutes today's walk and veggies won back. Completely free.</span></p>
         </div>
         <div class="btns">
-          <span class="btn soon"><span data-ko>스토어 출시 준비 중</span><span data-en>Coming to the stores</span></span>
+          <a class="btn store" href="https://apps.apple.com/app/id6839207995?ct=lt_lab_ko_web&amp;mt=8" data-store="ios" data-app="lifespan_timer" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.6c.03 2.9 2.55 3.87 2.58 3.88-.02.07-.4 1.38-1.33 2.73-.8 1.17-1.63 2.33-2.94 2.36-1.29.02-1.7-.77-3.17-.77s-1.93.75-3.15.79c-1.26.05-2.22-1.26-3.03-2.42-1.65-2.38-2.9-6.73-1.22-9.67.84-1.46 2.33-2.38 3.95-2.4 1.24-.03 2.4.83 3.16.83.75 0 2.17-1.03 3.66-.88.62.03 2.37.25 3.5 1.9-.09.06-2.09 1.22-2.06 3.65M14 4.6c.67-.81 1.12-1.94 1-3.06-.96.04-2.13.64-2.82 1.45-.62.71-1.16 1.86-1.01 2.96 1.07.08 2.16-.54 2.83-1.35"/></svg>
+            App Store
+          </a>
+          <a class="btn store" href="https://play.google.com/store/apps/details?id=com.mwkim.life_clock&amp;referrer=utm_source%3Dweb%26utm_medium%3Dweb%26utm_campaign%3Dlt_lab_ko_web" data-store="play" data-app="lifespan_timer_play" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.6v18.8c0 .5.5.8.9.6L21 12.9c.4-.2.4-.8 0-1L4.9 2c-.4-.2-.9.1-.9.6z"/></svg>
+            Google Play
+          </a>
           <a class="btn web" href="https://pb.soloflux.net/lifespan-timer/" data-ko data-app="lifespan_timer_web" rel="noopener">홈페이지</a>
           <a class="btn web" href="https://pb.soloflux.net/lifespan-timer/en/" data-en data-app="lifespan_timer_web" rel="noopener">Website</a>
         </div>
@@ -267,7 +271,7 @@ html[lang="en"] [data-en]{display:revert}
   }
   // store links: App Store ct/pt, Play referrer utm. The ?s= value is carried into the campaign name.
   var PT = "129006966"; // App Store Connect provider token (pt)
-  var APP_CODE = {social_timer:"st", cheonwon_hanggi:"gj", shortssekki:"ss", floorwake:"fw"};
+  var APP_CODE = {social_timer:"st", cheonwon_hanggi:"gj", shortssekki:"ss", floorwake:"fw", lifespan_timer:"lt"};
   function tag(a){
     try {
       var app = APP_CODE[(a.getAttribute("data-app") || "").replace(/_play$/, "")];
